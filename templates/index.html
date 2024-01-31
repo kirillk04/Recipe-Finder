@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Recipe Finder</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Common styling */
+        body {
+            text-align: center;
+            margin: 40px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: tan; /* Set the background color to tan */
+        }
+
+        /* Header styling */
+        header {
+            margin-bottom: 20px;
+        }
+
+        /* Form styling */
+        form {
+            margin-bottom: 20px;
+        }
+
+        /* Input styling */
+        input[type="text"],
+        input[type="submit"] {
+            font-size: 18px; /* Increase font size for input elements */
+        }
+
+        /* List styling */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        /* List item styling */
+        li {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+            width: 200px;
+        }
+
+        /* Recipe title styling */
+        .recipe-title {
+            font-size: 16px;
+            line-height: 1.2;
+            max-height: 3.6em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+        }
+
+        /* Image styling */
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+        }
+
+        /* Link styling */
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 18px; /* Increase font size for links */
+            color: blue;
+            text-decoration: underline;
+        }
+
+        /* Home button styling */
+        .home-button {
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 10px;
+            font-size: 18px; /* Increase font size for home button */
+            color: blue;
+            text-decoration: underline;
+        }
+
+        /* Recipe details styling */
+        .recipe-details {
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            padding: 20px;
+            background-color: white; /* Set the background color for the recipe details container */
+        }
+
+        /* Section title styling */
+        .section-title {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        /* List styling for ingredients and instructions */
+        .ingredient-list, .instruction-list {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Recipe App</h1>
+    </header>
+
+    <!-- Search Form -->
+    <form method="POST" action="/">
+        <input type="text" name="search_query" placeholder="Search for recipes">
+        <input type="submit" value="Search">
+        <a href="/home" class="home-button">Home</a>
+    </form>
+
+    <!-- Recipe Results -->
+    {% if recipes %}
+    <h2>Results for "{{ search_query }}"</h2>
+    <ul>
+        {% for recipe in recipes %}
+        <li>
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
+            {% if recipe.image %}
+            <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+            {% endif %}
+            <a href="{{ url_for('view_recipe', recipe_id=recipe.id, search_query=search_query) }}">View</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <!-- No Recipes Found -->
+    <p>No recipes found.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ recipe.title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Common styling */
+        body {
+            text-align: center;
+            margin: 0; /* Reset margin to 0 */
+            padding: 40px; /* Add padding for spacing */
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(0, 128, 126); /* Set the background color to light green */
+        }
+
+        /* Header styling */
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+
+        /* List styling */
+        ul, ol {
+            text-align: left;
+            list-style-position: inside;
+            padding-left: 20px;
+        }
+
+        /* Image styling */
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+
+        /* Link styling */
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: blue;
+            text-decoration: underline;
+        }
+
+        /* Recipe details styling */
+        .recipe-details {
+            max-width: 700px;
+            margin: 0 auto;
+            border: 2px solid #ccc;
+            padding: 20px;
+            background-color: tan; /* Set the background color for the recipe details container */
+        }
+
+        /* Section title styling */
+        .section-title {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        /* List styling for ingredients and instructions */
+        .ingredient-list, .instruction-list {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- Recipe Details -->
+    <div class="recipe-details">
+        <h1>{{ recipe.title }}</h1>
+
+        <!-- Display the recipe image if available -->
+        {% if recipe.image %}
+        <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+        {% endif %}
+
+        <!-- Ingredients section -->
+        <h2 class="section-title">Ingredients</h2>
+        <!-- Create an unordered list for displaying the ingredients -->
+        <ul class="ingredient-list">
+            <!-- Loop through each ingredient in the recipe's extendedIngredients -->
+            {% for ingredient in recipe.extendedIngredients %}
+            <li>{{ ingredient.original }}</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Instructions Section -->
+        <h2 class="section-title">Instructions</h2>
+        <ol class="instruction-list">
+            {% for step in recipe.analyzedInstructions[0].steps %}
+            <li>{{ step.step }}</li>
+            {% endfor %}
+        </ol>
+        <a href="/?search_query={{ search_query }}" class="back-link">Back to search results</a>
+    </div>
+</body>
+</html>
